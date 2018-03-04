@@ -4,6 +4,7 @@ import random
 import aiohttp
 import re
 import websockets
+import discord.member
 from datetime import datetime, timedelta
 
 client = discord.Client()
@@ -26,6 +27,19 @@ async def on_member_join(member):
     #Adiciona o cargo "Membro" ao membro que entrou
     role = discord.utils.find(lambda r: r.name == "Membros", member.server.roles)
     await client.add_roles(member, role)
+
+@client.event
+async def on_member_ban(user):
+    #canal que vai mandar: (pode alterar se quiser)
+    channel = discord.utils.find(lambda c: c.name == 'geral', user.server.channels)
+    #O embed: (troque a mensagem pelo que quiser, só não apague o "{0.name}, nem o .format
+    embed = discord.Embed(title='GamingBOT - Bans', description='Algum moderador baniu o membro **@{0.name}** do servidor!\n\nBem Feito :P'.format(user), color=0xff9d00)
+    #Para exibir o gif do thor: (se quiser apagar é escolha sua
+    embed.set_image(url='https://im4.ezgif.com/tmp/ezgif-4-78bb814d9d.gif')
+    #Para exibir o avatar do usuário punido, se quiser apagar tmb...
+    embed.set_thumbnail(url=user.avatar_url)
+    #Manda a mensagem no canal
+    await client.send_message(channel, embed=embed)
 
 @client.event
 async def on_message(message):
@@ -171,19 +185,5 @@ async def on_message(message):
                               description="Um moderador baniu o membro **@{0.name}** do servidor :O".format(user))
         await client.send_message(channel, embed=embed)
 
-    @client.event
-    async def on_member_ban(user):
-        # canal que vai mandar: (pode alterar se quiser)
-        channel = discord.utils.find(lambda c: c.name == 'geral', user.server.channels)
-        # O embed: (troque a mensagem pelo que quiser, só não apague o "{0.name}, nem o .format
-        embed = discord.Embed(title='Sinta o martelo!',
-                              description='Algum moderador baniu o membro **@{0.name}** do servidor!\n\nO martelo deve ter doído :0'.format(
-                                  user), color=defcolor)
-        # Para exibir o gif do thor: (se quiser apagar é escolha sua
-        embed.set_image(url='https://im4.ezgif.com/tmp/ezgif-4-78bb814d9d.gif')
-        # Para exibir o avatar do usuário punido, se quiser apagar tmb...
-        embed.set_thumbnail(url=user.avatar_url)
-        # Manda a mensagem no canal
-        await client.send_message(channel, embed=embed)
 
 client.run("NDE3MzYzNjQ1NDcxNjUzODg4.DXSzKw.8jS4SlatszvaB0LmVthqJSbpQmk")
