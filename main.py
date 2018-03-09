@@ -4,6 +4,7 @@ import random
 import aiohttp
 import re
 import websockets
+import discord.member
 from datetime import datetime, timedelta
 
 client = discord.Client()
@@ -62,7 +63,7 @@ async def on_message(message):
         await client.send_message(message.channel, "Olá ")
     if message.client.lower().startswith('/tag list'):
         await client.send_message(message.channel,
-        embed=discord.Embed(title="Suas tags:", description="red,blue,green,csgo,lol", color=0xb90004)
+        embed=discord.Embed(title="Suas tags:", description="red,blue,green,csgo,lol",color=0xb90004)
     if message.content.lower().startswith('/hacker'):
         await client.send_message(message.channel, "Diego é claro ")
     if message.content.lower().startswith('/tags'):
