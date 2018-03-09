@@ -63,9 +63,11 @@ async def on_message(message):
         await client.send_message(message.channel, "Olá ")
     if message.content.lower().startswith('/tag list'):
         if message.author.id == "369962464613367811":
-            await client.send_message(message.channel, "```SuasTags: red,blue,green,csgo,lol,dono```")
+            await client.send_message(message.channel,
+        embed=discord.Embed(title="Suas tags:", description="red,blue,green,csgo,lol,dono", color=0xb90004)
         else:
-            await client.send_message(message.channel, "```SuasTags: red,blue,green,csgo,lol```")
+            await client.send_message(message.channel,
+            embed=discord.Embed(title="Suas tags:", description="red,blue,green,csgo,lol", color=0xb90004)
     if message.content.lower().startswith('/hacker'):
         await client.send_message(message.channel, "Diego é claro ")
     if message.content.lower().startswith('/tags'):
