@@ -61,14 +61,16 @@ async def on_message(message):
                 await client.send_message(canal, js['url'])
     if message.content.lower().startswith('/oi'):
         await client.send_message(message.channel, "Olá ")
+    if message.content.lower().startswith('/tag list'):
+        if message.author.id == "369962464613367811":
+            await client.send_message(message.channel, "```SuasTags: red,blue,green,csgo,lol,dono```")
+        else:
+            await client.send_message(message.channel, "```SuasTags: red,blue,green,csgo,lol```")
     if message.content.lower().startswith('/hacker'):
         await client.send_message(message.channel, "Diego é claro ")
     if message.content.lower().startswith('/tags'):
         await client.send_message(message.channel,
         embed=discord.Embed(title="GamingBOT - Tags", description="/tag list - Lista de Tags                                                                                                                                                                                       /tag add (tag) - adicionar uma tag                                                                                                                                                                                       /tag remove (tag) - remover uma tag", color=0xbf0022))
-    if message.content.lower().startswith('/tags'):
-        await client.send_message(message.channel,
-        embed=discord.Embed(title="Tags - List", description="Blue,Red,Green,CsGo,LoL"color=0xb90004)
     if message.content.lower().startswith('/ajuda'):
         await client.send_message(message.channel,
         embed=discord.Embed(title="GamingBOT - Ajuda", description="/vom (msg) - Verdade ou Mentira                                                                                                                                                                             /hacker - O Maior hacker da história (vai ser removido)                                                                                                                               /moeda - Cara ou Coroa                                                                                                                                                                                     /dog - Imagens de Cachorro                                                                                                                                                                                /cat - Imagens de Gato (help do thalexxx)                                                                                                                                                           /nv - Nivel de Doidice                                                                                                                                                                                                /limpar (0 a 100) [administrador]                                                                                                                                                                               /tags - Como deixar seu nome colorido",color=0xbb0021))
@@ -182,6 +184,5 @@ async def on_message(message):
         embed = discord.Embed(title="SINTA O PESO DO MARTELO:",
                               description="Um moderador baniu o membro **@{0.name}** do servidor :O".format(user))
         await client.send_message(channel, embed=embed)
-
 
 client.run("NDE3MzYzNjQ1NDcxNjUzODg4.DXSzKw.8jS4SlatszvaB0LmVthqJSbpQmk")
