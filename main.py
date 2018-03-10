@@ -15,10 +15,13 @@ async def on_ready():
         game=discord.Game(name="/ajuda || Estou on em " + str(len(client.servers)) + " servidores!",
                           url='https://twitch.tv/tmpoarr', type=1))
 
-    print('BOT ONLINE')
-    print(client.user.name)
-    print(client.user.id)
-    print('-=-=-=-=-=')
+    print('-------------------------------------------------------------------------------------------------')
+    print('Logado como ' + client.user.name + ' (ID:' + client.user.id + ') | Conectado a ' + str(
+        len(client.servers)) + ' servidores | Em contato com ' + str(len(set(client.get_all_members()))) + ' usuarios')
+    print('-------------------------------------------------------------------------------------------------')
+    print('Link de convite do {}:'.format(client.user.name))
+    print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
+    print('-------------------------------------------------------------------------------------------------')
 
 @client.event
 async def on_member_join(member):
