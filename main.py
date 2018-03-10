@@ -2,12 +2,22 @@ import discord
 import asyncio
 import random
 import aiohttp
+import os
 import re
 import websockets
 import discord.member
 from datetime import datetime, timedelta
 
+token = secreto.token
 client = discord.Client()
+
+is_prod = os.environ.get('IS_HEROKU', None)
+if is_prod:
+    token = os.environ.get('TOKEN')
+else:
+    import secreto
+    token = secreto.token
+
 msg_author = None
 @client.event
 async def on_ready():
@@ -185,5 +195,4 @@ async def on_message(message):
         embed = discord.Embed(title="SINTA O PESO DO MARTELO:",
                               description="Um moderador baniu o membro **@{0.name}** do servidor :O".format(user))
         await client.send_message(channel, embed=embed)
-
-client.run("NDE3MzYzNjQ1NDcxNjUzODg4.DXSzKw.8jS4SlatszvaB0LmVthqJSbpQmk")
+client.run(token)
