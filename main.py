@@ -4,7 +4,6 @@ import random
 import aiohttp
 import os
 import re
-import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
@@ -193,4 +192,4 @@ async def on_message(message):
     s = d.seconds * 1000 + d.microseconds // 1000
     await client.send_message(message.channel, '🏓 Pong! {}ms'.format(s))
 
-client.run(NDE3MzYzNjQ1NDcxNjUzODg4.DXSzKw.8jS4SlatszvaB0LmVthqJSbpQmk)
+client.run(token)
