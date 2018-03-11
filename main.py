@@ -4,10 +4,12 @@ import random
 import aiohttp
 import os
 import re
+import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
 
+vermelho = 0xbb0021
 token = secreto.token
 client = discord.Client()
 
@@ -44,16 +46,14 @@ async def on_member_join(member):
 @client.event
 async def on_member_ban(user):
     #canal que vai mandar: (pode alterar se quiser)
-    channel = discord.utils.find(lambda c: c.name == 'geral', user.server.channels)
+    channel = discord.utils.find(lambda c: c.name == 'bans', user.server.channels)
     #O embed: (troque a mensagem pelo que quiser, só não apague o "{0.name}, nem o .format
-    embed = discord.Embed(title='GamingBOT - Bans', description='Algum moderador baniu o membro **@{0.name}** do servidor!\n\nBem Feito :P'.format(user), color=0xff9d00)
+    embed = discord.Embed(title='GamingBOT - Bans', description='Algum moderador baniu o membro **@{0.name}** do servidor!\n\nBem Feito :P'.format(user), color=vermelho)
     #Para exibir o gif do thor: (se quiser apagar é escolha sua
     embed.set_image(url='https://im4.ezgif.com/tmp/ezgif-4-78bb814d9d.gif')
-    #Para exibir o avatar do usuário punido, se quiser apagar tmb...
-    embed.set_thumbnail(url=user.avatar_url)
+    embed.set_thumbnail(url='https://escolavoando.com.br/images/logo.png')
     #Manda a mensagem no canal
     await client.send_message(channel, embed=embed)
-
 @client.event
 async def on_message(message):
     #chat
@@ -74,8 +74,12 @@ async def on_message(message):
                 await client.send_message(canal, js['url'])
     if message.content.lower().startswith('/oi'):
         await client.send_message(message.channel, "Olá ")
+    if message.content.lower().startswith('/pete'):
+        await client.send_message(message.channel, "/repete")
+    if message.content.lower().startswith('/repete'):
+        await client.send_message(message.channel, "/pete")
     if message.content.lower().startswith('/hacker'):
-        await client.send_message(message.channel, "Diego é claro ")
+        await client.send_message(message.channel, ":P")
     if message.content.lower().startswith('/tag list'):
         await client.send_message(message.channel,
         embed=discord.Embed(title="Tags - list", description="red,blue,green,csgo,lol",color=0xbb0021))
@@ -189,10 +193,4 @@ async def on_message(message):
     s = d.seconds * 1000 + d.microseconds // 1000
     await client.send_message(message.channel, '🏓 Pong! {}ms'.format(s))
 
-    @client.event
-    async def on_member_ban(user):
-        channel = discord.utils.find(lambda c: c.name == 'geral', user.server.channels)
-        embed = discord.Embed(title="SINTA O PESO DO MARTELO:",
-                              description="Um moderador baniu o membro **@{0.name}** do servidor :O".format(user))
-        await client.send_message(channel, embed=embed)
 client.run(token)
