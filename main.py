@@ -193,4 +193,4 @@ async def on_message(message):
     s = d.seconds * 1000 + d.microseconds // 1000
     await client.send_message(message.channel, '🏓 Pong! {}ms'.format(s))
 
-client.run(token)
+client.run(NDE3MzYzNjQ1NDcxNjUzODg4.DXSzKw.8jS4SlatszvaB0LmVthqJSbpQmk)
