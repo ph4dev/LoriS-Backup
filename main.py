@@ -4,6 +4,7 @@ import random
 import aiohttp
 import os
 import re
+import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
@@ -33,7 +34,6 @@ async def on_ready():
     print('Link de convite do {}:'.format(client.user.name))
     print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
     print('-------------------------------------------------------------------------------------------------')
-
 @client.event
 async def on_member_join(member):
     #Envia uma mensagem privada de boas vindas com o nome do servidor e mencionando o usuario
