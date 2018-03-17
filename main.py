@@ -4,6 +4,7 @@ import random
 import aiohttp
 import os
 import re
+import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
@@ -72,9 +73,9 @@ async def on_message(message):
     if message.content.lower().startswith('/oi'):
         await client.send_message(message.channel, "Olá ")
     if message.content.lower().startswith('/pete'):
-        await client.send_message(message.channel, "/repete")
+        await client.send_message(message.channel, "/repete @everyone")
     if message.content.lower().startswith('/repete'):
-        await client.send_message(message.channel, "/pete")
+        await client.send_message(message.channel, "/pete @everyone")
     if message.content.lower().startswith('/hacker'):
         await client.send_message(message.channel, ":P")
     if message.content.lower().startswith('/tag list'):
