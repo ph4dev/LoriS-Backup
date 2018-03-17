@@ -4,12 +4,12 @@ import random
 import aiohttp
 import os
 import re
+import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
 
 vermelho = 0xbb0021
-token = secreto.token
 client = discord.Client()
 
 is_prod = os.environ.get('IS_HEROKU', None)
