@@ -4,7 +4,6 @@ import random
 import aiohttp
 import os
 import re
-import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
