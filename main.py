@@ -56,7 +56,7 @@ async def on_member_ban(user):
 async def on_message(message):
     #chat
     if message.content.lower().startswith('/cat'):
-        async with aiohttp.get('http://random.cat/meow') as r:
+        async with aiohttp.get('http://aws.random.cat/meow') as r:
             if r.status == 200:
                 js = await r.json()
                 canal = message.channel
@@ -72,6 +72,26 @@ async def on_message(message):
                 await client.send_message(canal, js['url'])
     if message.content.lower().startswith('/oi'):
         await client.send_message(message.channel, "Olá ")
+    elif message.content.lower().startswith('/avatar'):
+        embed = discord.Embed(
+            title=None,
+            color=vermelho,
+            descriptino=None,
+        )
+        embed.set_author(name=message.author.name)
+        embed.set_image(url=message.author.avatar_url)
+        await client.send_message(message.channel, embed=embed)
+    elif message.content.lower().startswith('/perfil'):
+        embed = discord.Embed(
+            title=None,
+            color=vermelho,
+            description='money: xx                                                                                                                                                                                       tags: xx                                                                                                                                                                                       rep: xx',
+        )
+        embed.set_author(name=message.author.name)
+        embed.set_thumbnail(url=message.author.avatar_url)
+        embed.set_footer(text='id: '+ message.author.id)
+        await client.send_message(message.channel, embed=embed)
+
     if message.content.lower().startswith('/pete'):
         await client.send_message(message.channel, "/repete @everyone")
     if message.content.lower().startswith('/repete'):
@@ -86,7 +106,7 @@ async def on_message(message):
         embed=discord.Embed(title="GamingBOT - Tags", description="/tag list - Lista de Tags                                                                                                                                                                                       /tag add (tag) - adicionar uma tag                                                                                                                                                                                       /tag remove (tag) - remover uma tag", color=0xbf0022))
     if message.content.lower().startswith('/ajuda'):
         await client.send_message(message.channel,
-        embed=discord.Embed(title="GamingBOT - Ajuda", description="/vom (msg) - Verdade ou Mentira                                                                                                                                                                             /hacker - O Maior hacker da história (vai ser removido)                                                                                                                               /moeda - Cara ou Coroa                                                                                                                                                                                     /dog - Imagens de Cachorro                                                                                                                                                                                /cat - Imagens de Gato (help do thalexxx)                                                                                                                                                           /nv - Nivel de Doidice                                                                                                                                                                                                /limpar (0 a 100) [administrador]                                                                                                                                                                               /tags - Como deixar seu nome colorido",color=0xbb0021))
+        embed=discord.Embed(title="GamingBOT - Ajuda", description="/vom (msg) - Verdade ou Mentira                                                                                                                                                                             /hacker - O Maior hacker da história (vai ser removido)                                                                                                                               /moeda - Cara ou Coroa                                                                                                                                                                                     /dog - Imagens de Cachorro                                                                                                                                                                                /cat - Imagens de Gato                                                                                                                                                                             /nv - Nivel de Doidice                                                                                                                                                                                                /limpar (0 a 100) [administrador]                                                                                                                                                                               /tags - Como deixar seu nome colorido                                                                                                                                                                             /perfil - Veja seu Perfil (beta)                                                                                                                                                                             /avatar - Veja seu lindo avatar",color=0xbb0021))
     if message.content.lower().startswith('/vercao'):
         await client.send_message(message.channel, "```GamingBOT                                                                                                                                                                                                                            Verção : 0.1.4```")
     if message.content.lower().startswith('/vom'):
