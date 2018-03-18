@@ -4,6 +4,7 @@ import random
 import aiohttp
 import os
 import re
+import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
@@ -92,9 +93,9 @@ async def on_message(message):
         await client.send_message(message.channel, embed=embed)
 
     if message.content.lower().startswith('/pete'):
-        await client.send_message(message.channel, "/repete @everyone")
+        await client.send_message(message.channel, "'-'")
     if message.content.lower().startswith('/repete'):
-        await client.send_message(message.channel, "/pete @everyone")
+        await client.send_message(message.channel, "'-'")
     if message.content.lower().startswith('/hacker'):
         await client.send_message(message.channel, ":P")
     if message.content.lower().startswith('/tag list'):
@@ -209,5 +210,4 @@ async def on_message(message):
         d = datetime.utcnow() - message.timestamp
     s = d.seconds * 1000 + d.microseconds // 1000
     await client.send_message(message.channel, '🏓 Pong! {}ms'.format(s))
-
 client.run(token)
