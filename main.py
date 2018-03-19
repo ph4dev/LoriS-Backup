@@ -72,6 +72,15 @@ async def on_message(message):
                 await client.send_message(canal, js['url'])
     if message.content.lower().startswith('/oi'):
         await client.send_message(message.channel, "Olá ")
+    if message.content.lower().startswith('/voar'):
+        embed = discord.Embed(
+            title=None,
+            color=vermelho,
+            description='está voando',
+        )
+        embed.set_author(name= message.author.name)
+        embed.set_image(url= 'http://www.gifmania.com.br/Gif-Animados-Quadrinhos/Animacoes-Superman/Imagens-Superman-Voando/Superman-Voando-87265.gif')
+        await client.send_message(message.channel, embed=embed)
     elif message.content.lower().startswith('/avatar'):
         embed = discord.Embed(
             title=None,
@@ -104,9 +113,24 @@ async def on_message(message):
     if message.content.lower().startswith('/tags'):
         await client.send_message(message.channel,
         embed=discord.Embed(title="GamingBOT - Tags", description="/tag list - Lista de Tags                                                                                                                                                                                       /tag add (tag) - adicionar uma tag                                                                                                                                                                                       /tag remove (tag) - remover uma tag", color=0xbf0022))
-    if message.content.lower().startswith('/ajuda'):
-        await client.send_message(message.channel,
-        embed=discord.Embed(title="GamingBOT - Ajuda", description="/vom (msg) - Verdade ou Mentira                                                                                                                                                                             /hacker - O Maior hacker da história (vai ser removido)                                                                                                                               /moeda - Cara ou Coroa                                                                                                                                                                                     /dog - Imagens de Cachorro                                                                                                                                                                                /cat - Imagens de Gato                                                                                                                                                                             /nv - Nivel de Doidice                                                                                                                                                                                                /limpar (0 a 100) [administrador]                                                                                                                                                                               /tags - Como deixar seu nome colorido                                                                                                                                                                             /perfil - Veja seu Perfil (beta)                                                                                                                                                                             /avatar - Veja seu lindo avatar",color=0xbb0021))
+    #ajuda
+    if message.content.lower().startswith("/ajuda"):
+     embed1 =discord.Embed(
+        title="GamingBOT - Ajuda",
+        color=vermelho,
+        description="/vom (msg) - Verdade ou Mentira \n"
+                    "/hacker - O Maior hacker da história (vai ser removido) \n"
+                    "/moeda - Cara ou Coroa \n"
+                    "/dog - Imagens de Cachorro \n"
+                    "/cat - Imagens de Gato \n"
+                    "/nv - Nivel de Doidice \n"
+                    "/limpar (0 a 100) [administrador] \n"
+                    "/tags - Como deixar seu nome colorido \n"
+                    "/perfil - Veja seu Perfil (beta) \n"
+                    "/avatar - Veja seu lindo avatar \n"
+                    "/voar - Voe que nem um passarinho \n"
+                    "/instagram (img) - Deixe as pessoas avaliarem suas fotos ",)
+    await client.send_message(message.channel, embed=embed1)
     if message.content.lower().startswith('/vercao'):
         await client.send_message(message.channel, "```GamingBOT                                                                                                                                                                                                                            Verção : 0.1.4```")
     if message.content.lower().startswith('/vom'):
@@ -116,6 +140,9 @@ async def on_message(message):
         if choice == 2:
             await client.send_message(message.channel, "Mentira")
 
+    if message.content.lower().startswith('/instagram'):
+        await client.add_reaction(message, emoji='✅')
+        await client.add_reaction(message, emoji='❌')
     if message.content.lower().startswith('/nv'):
         choice = random.randint(1,4)
         if choice == 1:
