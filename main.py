@@ -4,6 +4,7 @@ import random
 import aiohttp
 import os
 import re
+import secreto
 import websockets
 import discord.member
 from datetime import datetime, timedelta
@@ -84,7 +85,8 @@ async def on_message(message):
         embed = discord.Embed(
             title=None,
             color=vermelho,
-            descriptino=None,
+            description="**[Clique aqui](" + message.author.avatar_url + ") para acessar o link de seu avatar!**"
+            ,
         )
         embed.set_author(name=message.author.name)
         embed.set_image(url=message.author.avatar_url)
@@ -114,7 +116,8 @@ async def on_message(message):
         embed=discord.Embed(title="GamingBOT - Tags", description="/tag list - Lista de Tags                                                                                                                                                                                       /tag add (tag) - adicionar uma tag                                                                                                                                                                                       /tag remove (tag) - remover uma tag", color=0xbf0022))
     #ajuda
     if message.content.lower().startswith("/ajuda"):
-     embed1 =discord.Embed(
+        await client.send_message(message.channel,
+        embed=discord.Embed(
         title="GamingBOT - Ajuda",
         color=vermelho,
         description="/vom (msg) - Verdade ou Mentira \n"
@@ -128,8 +131,7 @@ async def on_message(message):
                     "/perfil - Veja seu Perfil (beta) \n"
                     "/avatar - Veja seu lindo avatar \n"
                     "/voar - Voe que nem um passarinho \n"
-                    "/instagram (img) - Deixe as pessoas avaliarem suas fotos ",)
-    await client.send_message(message.channel, embed=embed1)
+                    "/instagram (img) - Deixe as pessoas avaliarem suas fotos ",))
     if message.content.lower().startswith('/vercao'):
         await client.send_message(message.channel, "```GamingBOT                                                                                                                                                                                                                            Verção : 0.1.4```")
     if message.content.lower().startswith('/vom'):
