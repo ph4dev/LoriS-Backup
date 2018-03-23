@@ -46,7 +46,7 @@ async def on_member_ban(user):
     #canal que vai mandar: (pode alterar se quiser)
     channel = discord.utils.find(lambda c: c.name == 'bans', user.server.channels)
     #O embed: (troque a mensagem pelo que quiser, só não apague o "{0.name}, nem o .format
-    embed = discord.Embed(title='GamingBOT - Bans', description='Algum moderador baniu o membro **@{0.name}** do servidor!\n\nBem Feito :P'.format(user), color=vermelho)
+    embed = discord.Embed(title='LoriS - Bans', description='Algum moderador baniu o membro **@{0.name}** do servidor!\n\nBem Feito :P'.format(user), color=vermelho)
     #Para exibir o gif do thor: (se quiser apagar é escolha sua
     embed.set_image(url='https://im4.ezgif.com/tmp/ezgif-4-78bb814d9d.gif')
     embed.set_thumbnail(url='https://escolavoando.com.br/images/logo.png')
@@ -113,12 +113,12 @@ async def on_message(message):
         embed=discord.Embed(title="Tags - list", description="red,blue,green,csgo,lol",color=0xbb0021))
     if message.content.lower().startswith('/tags'):
         await client.send_message(message.channel,
-        embed=discord.Embed(title="GamingBOT - Tags", description="/tag list - Lista de Tags                                                                                                                                                                                       /tag add (tag) - adicionar uma tag                                                                                                                                                                                       /tag remove (tag) - remover uma tag", color=0xbf0022))
+        embed=discord.Embed(title="LoriS - Tags", description="/tag list - Lista de Tags                                                                                                                                                                                       /tag add (tag) - adicionar uma tag                                                                                                                                                                                       /tag remove (tag) - remover uma tag", color=0xbf0022))
     #ajuda
     if message.content.lower().startswith("/ajuda"):
         await client.send_message(message.channel,
         embed=discord.Embed(
-        title="GamingBOT - Ajuda",
+        title="LoriS - Ajuda",
         color=vermelho,
         description="/vom (msg) - Verdade ou Mentira \n"
                     "/hacker - O Maior hacker da história (vai ser removido) \n"
@@ -133,7 +133,7 @@ async def on_message(message):
                     "/voar - Voe que nem um passarinho \n"
                     "/instagram (img) - Deixe as pessoas avaliarem suas fotos ",))
     if message.content.lower().startswith('/vercao'):
-        await client.send_message(message.channel, "```GamingBOT                                                                                                                                                                                                                            Verção : 0.1.4```")
+        await client.send_message(message.channel, "```Loris                                                                                                                                                                                                                            Verção : 0.1.4```")
     if message.content.lower().startswith('/vom'):
         choice = random.randint(1,2)
         if choice == 1:
