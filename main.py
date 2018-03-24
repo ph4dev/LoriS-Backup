@@ -3,6 +3,7 @@ import asyncio
 import random
 import aiohttp
 import os
+import secreto
 import time
 import re
 import websockets
@@ -139,6 +140,21 @@ async def on_message(message):
         await client.send_message(message.channel, "'-'")
     if message.content.lower().startswith('l!hacker'):
         await client.send_message(message.channel, ":P")
+    if message.content.lower().startswith('l!serverinfo'):
+        server = message.server
+        embedserver = discord.Embed(
+            title="ServerINFO - " + message.server.name ,
+            color=vermelho,
+            description=None
+        )
+        embedserver.set_thumbnail(url=server.icon_url)
+        embedserver.add_field(name="Dono",value=server.owner)
+        embedserver.add_field(name="ID",value=server.id)
+        embedserver.add_field(name="Região",value=server.region)
+        embedserver.add_field(name='Membros', value=len(server.members))
+        embedserver.add_field(name='Cargos ', value=([role.name for role in server.roles if role.name != "@everyone"]))
+        embedserver.set_footer(text="v 1.0")
+        await client.send_message(message.channel,embed=embedserver)
     if message.content.lower().startswith('l!info'):
         embed = discord.Embed(
             title=None,
