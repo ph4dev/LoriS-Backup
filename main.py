@@ -4,11 +4,15 @@ import random
 import aiohttp
 import os
 import time
+import requests
+import io
 import re
+import safygiphy
 import websockets
 import discord.member
 from datetime import datetime, timedelta
 
+g = safygiphy.Giphy()
 vermelho = 0xbb0021
 client = discord.Client()
 
@@ -54,6 +58,13 @@ async def on_member_ban(user):
 @client.event
 async def on_message(message):
     #chat
+    if message.content.startswith('l!gif'):
+        gif_tag = message.content[5:]
+        rgif = g.random(tag=str(gif_tag))
+        response = requests.get(
+            str(rgif.get("data", {}).get('image_original_url')), stream=True
+        )
+        await client.send_file(message.channel, io.BytesIO(response.raw.read()), filename='video.gif')
     if message.content.lower().startswith('l!cat'):
         async with aiohttp.get('http://aws.random.cat/meow') as r:
             if r.status == 200:
@@ -70,6 +81,8 @@ async def on_message(message):
                 await client.delete_message(message)
     if message.content.lower().startswith('l!oi'):
         await client.send_message(message.channel, "Olá ")
+    if message.content.lower().startswith('loris'):
+        await client.send_message(message.channel, "OI :3")
     if message.content.lower().startswith('kof'):
         await client.send_message(message.channel, "'-'")
     if message.content.lower().startswith('l!f'):
@@ -155,6 +168,7 @@ async def on_message(message):
         embedserver.set_footer(text="v 1.0")
         await client.send_message(message.channel,embed=embedserver)
     if message.content.lower().startswith('l!info'):
+        user = message.mentions[0]
         embed = discord.Embed(
             title=None,
             color=vermelho,
@@ -274,7 +288,7 @@ async def on_message(message):
 
     if message.content.lower().startswith('l!link'):
         await client.send_message(message.channel, "Link do Bot:")
-        await client.send_message(message.channel, "https://discordapp.com/oauth2/authorize?client_id={}&permissions=8&scope=bot".format(client.user.id))
+        await client.send_message(message.channel, "http://bit.ly/LoriSBOT")
     #limpar
     qntdd = int
 
