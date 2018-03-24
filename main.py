@@ -3,6 +3,7 @@ import asyncio
 import random
 import aiohttp
 import os
+import secreto
 import re
 import websockets
 import discord.member
@@ -22,7 +23,7 @@ msg_author = None
 @client.event
 async def on_ready():
     await client.change_presence(
-        game=discord.Game(name="L!ajuda | Estou on em " + str(len(client.servers)) + " servidores!", type=0))
+        game=discord.Game(name="L!ajuda | Estou ON em " + str(len(client.servers)) + " servidores!", type=0))
 
     print('-------------------------------------------------------------------------------------------------')
     print('Logado como ' + client.user.name + ' (ID:' + client.user.id + ') | Conectado a ' + str(
@@ -60,16 +61,24 @@ async def on_message(message):
                 canal = message.channel
                 await client.delete_message(message)
                 await client.send_message(canal, js['file'])
-
     if message.content.lower().startswith('l!dog'):
         async with aiohttp.get('https://random.dog/woof.json') as r:
             if r.status == 200:
                 js = await r.json()
                 canal = message.channel
-                await client.delete_message(message)
                 await client.send_message(canal, js['url'])
+                await client.delete_message(message)
     if message.content.lower().startswith('l!oi'):
         await client.send_message(message.channel, "Olá ")
+    if message.content.lower().startswith('l!mutar'):
+        if not message.author.server_permissions.administrator:
+            return await client.send_message(message.channel, 'Você não tem permissão para executar esse comando!')
+        mention1 = message.mentions[0]
+        cargo = discord.utils.get(message.author.server.roles,name='Mutado')
+        await client.add_roles(mention1, cargo)
+        await client.send_message(message.channel, "Player mutado com SUCESSO :D")
+    if message.content.lower().startswith('a loris ta on?'):
+        await client.send_message(message.channel, "se eu to falando contigo '-'")
     if message.content.lower().startswith('l!voar'):
         embed = discord.Embed(
             title=None,
@@ -89,6 +98,7 @@ async def on_message(message):
         embed.set_author(name=message.author.name)
         embed.set_image(url=message.author.avatar_url)
         await client.send_message(message.channel, embed=embed)
+        
     elif message.content.lower().startswith('l!perfil'):
         embed = discord.Embed(
             title=None,
@@ -99,22 +109,35 @@ async def on_message(message):
         embed.set_thumbnail(url=message.author.avatar_url)
         embed.set_footer(text='id: '+ message.author.id)
         await client.send_message(message.channel, embed=embed)
-
     if message.content.lower().startswith('l!pete'):
         await client.send_message(message.channel, "'-'")
     if message.content.lower().startswith('l!repete'):
         await client.send_message(message.channel, "'-'")
     if message.content.lower().startswith('l!hacker'):
         await client.send_message(message.channel, ":P")
+    if message.content.lower().startswith('l!botinfo'):
+        embed = discord.Embed(
+            title=None,
+            color=vermelho,
+            description=None
+        )
+        embed.set_author(name="BotINFO")
+        embed.set_thumbnail(url=client.user.avatar_url)
+        embed.add_field(name="Meu Nome: ",value=client.user.name)
+        embed.add_field(name="Meu ID: ",value=client.user.id)
+        embed.add_field(name="Estou conectada em: ",value=str(len(client.servers)) + ' servidores')
+        embed.add_field(name="Em Contato com:",value=str(len(set(client.get_all_members()))) + ' usuarios')
+        embed.set_footer(text="Meu criador:Ph4#3931 Meu prefixo: L! Quer saber mais sobre mim? utilize L!ajuda")
+        await client.send_message(message.channel,embed=embed)
     if message.content.lower().startswith('l!tag list'):
         await client.send_message(message.channel,
         embed=discord.Embed(title="Tags - list", description="red,blue,green,csgo,lol",color=0xbb0021))
     if message.content.lower().startswith('l!tags'):
         await client.send_message(message.channel,
-        embed=discord.Embed(title="LoriS - Tags", description="/tag list - Lista de Tags                                                                                                                                                                                       /tag add (tag) - adicionar uma tag                                                                                                                                                                                       /tag remove (tag) - remover uma tag", color=0xbf0022))
+        embed=discord.Embed(title="LoriS - Tags", description="l!tag list - Lista de Tags                                                                                                                                                                                       l!tag add (tag) - adicionar uma tag                                                                                                                                                                                       l!tag remove (tag) - remover uma tag", color=0xbf0022))
     #ajuda
     if message.content.lower().startswith("l!ajuda"):
-        await client.send_message(message.channel,
+        await client.send_message(message.author,
         embed=discord.Embed(
         title="LoriS - Ajuda",
         color=vermelho,
@@ -133,9 +156,17 @@ async def on_message(message):
                     "l!nv - Veja seu nivel de doidice \n"
                     "l!link - Adquira o link do bot \n"
                     "l!ping - Pong \n"
+                    "l!mutar - Mute :D {adminstradores}\n"
                     "l!instagram (img) - Deixe as pessoas avaliarem suas fotos ",))
-    if message.content.lower().startswith('l!vercao'):
-        await client.send_message(message.channel, "```Loris                                                                                                                                                                                                                            Verção : 0.1.4```")
+        await client.send_message(message.channel,
+            embed=discord.Embed(
+                title="LoriS - Ajuda",
+                color=vermelho,
+                description="os comandos foram enviados para seu privado :) " + message.author.mention
+            ))
+        await client.delete_message(message)
+    if message.content.lower().startswith('l!versao'):
+        await client.send_message(message.channel, "```Loris                                                                                                                                                                                                                            Versão : 0.1.4```")
     if message.content.lower().startswith('l!vom'):
         choice = random.randint(1,2)
         if choice == 1:
