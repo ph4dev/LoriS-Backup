@@ -3,7 +3,6 @@ import asyncio
 import random
 import aiohttp
 import os
-import secreto
 import time
 import re
 import websockets
