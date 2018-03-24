@@ -3,6 +3,8 @@ import asyncio
 import random
 import aiohttp
 import os
+import secreto
+import time
 import re
 import websockets
 import discord.member
@@ -69,6 +71,17 @@ async def on_message(message):
                 await client.delete_message(message)
     if message.content.lower().startswith('l!oi'):
         await client.send_message(message.channel, "Olá ")
+    if message.content.lower().startswith('kof'):
+        await client.send_message(message.channel, "'-'")
+    if message.content.lower().startswith('l!f'):
+        try:
+
+            await client.send_message(message.channel, message.content[4:])
+            await client.delete_message(message)
+
+        except:
+
+            await client.send_message(message.channel, 'Escreva algo para eu repetir.')
     if message.content.lower().startswith('l!mutar'):
         if not message.author.server_permissions.administrator:
             return await client.send_message(message.channel, 'Você não tem permissão para executar esse comando!')
@@ -88,16 +101,29 @@ async def on_message(message):
         embed.set_image(url= 'http://www.gifmania.com.br/Gif-Animados-Quadrinhos/Animacoes-Superman/Imagens-Superman-Voando/Superman-Voando-87265.gif')
         await client.send_message(message.channel, embed=embed)
     elif message.content.lower().startswith('l!avatar'):
-        embed = discord.Embed(
-            title=None,
+
+        try:
+            member = message.mentions[0]
+            embed = discord.Embed(
+                title='Avatar de {}'.format(member.name),
             color=vermelho,
-            description="**[Clique aqui](" + message.author.avatar_url + ") para acessar o link de seu avatar!**"
-            ,
-        )
-        embed.set_author(name=message.author.name)
-        embed.set_image(url=message.author.avatar_url)
-        await client.send_message(message.channel, embed=embed)
-        
+            description='[Link direto](' + member.avatar_url + ') do avatar de {}! '.format(member.name))
+
+
+
+            embed.set_image(url=member.avatar_url)
+            await client.send_message(message.channel, embed=embed)
+
+        except:
+            member = message.author
+            embed = discord.Embed(
+                title='Seu avatar'.format(member.name),
+                color=vermelho,
+                description='[Link direto](' + member.avatar_url + ') do seu avatar! '.format(member.name))
+
+
+            embed.set_image(url=member.avatar_url)
+            await client.send_message(message.channel, embed=embed)
     elif message.content.lower().startswith('l!perfil'):
         embed = discord.Embed(
             title=None,
@@ -114,6 +140,43 @@ async def on_message(message):
         await client.send_message(message.channel, "'-'")
     if message.content.lower().startswith('l!hacker'):
         await client.send_message(message.channel, ":P")
+    if message.content.lower().startswith('l!info'):
+        embed = discord.Embed(
+            title=None,
+            color=vermelho,
+            description=None
+        )
+        embed.set_author(name="Suas Informações:")
+        embed.set_thumbnail(url=message.author.avatar_url)
+        embed.add_field(name="Seu Nome:",value=message.author.name)
+        embed.add_field(name="Apelido:",value=message.author.nick)
+        embed.add_field(name="Seu ID:",value=message.author.id)
+        embed.add_field(name="Status:",value=message.author.status)
+        embed.add_field(name="Jogando:",value=message.author.game)
+        embed.add_field(name="Tag:",value=message.author.discriminator)
+        embed.add_field(name="Cor:",value=message.author.color)
+        embed.add_field(name='Cargos:',value=([role.name for role in message.author.roles if role.name != "@everyone"]))
+        embed.set_footer(text="v 1.0")
+        await client.send_message(message.channel,embed=embed)
+    if message.content.lower().startswith('l!ver'):
+        user = message.mentions[0]
+        embed = discord.Embed(
+            title=None,
+            color=vermelho,
+            description=None
+        )
+        embed.set_author(name="Informaçoes De: " + user.name)
+        embed.set_thumbnail(url=user.avatar_url)
+        embed.add_field(name="Seu Nome:",value=user.name)
+        embed.add_field(name="Apelido:",value=user.nick)
+        embed.add_field(name="Seu ID:",value=user.id)
+        embed.add_field(name="Status:",value=user.status)
+        embed.add_field(name="Jogando:",value=user.game)
+        embed.add_field(name="Tag:",value=user.discriminator)
+        embed.add_field(name="Cor:",value=user.color)
+        embed.add_field(name='Cargos:',value=([role.name for role in user.roles if role.name != "@everyone"]))
+        embed.set_footer(text="v 1.0")
+        await client.send_message(message.channel,embed=embed)
     if message.content.lower().startswith('l!botinfo'):
         embed = discord.Embed(
             title=None,
@@ -156,6 +219,7 @@ async def on_message(message):
                     "l!link - Adquira o link do bot \n"
                     "l!ping - Pong \n"
                     "l!mutar - Mute :D {adminstradores}\n"
+                    "l!f (msg) - Para o bot repetir a msg \n"
                     "l!instagram (img) - Deixe as pessoas avaliarem suas fotos ",))
         await client.send_message(message.channel,
             embed=discord.Embed(
@@ -206,7 +270,7 @@ async def on_message(message):
         except ValueError:
             return float(s)
     if message.content.lower().startswith('l!limpar'):
-        if message.author.id == "369962464613367811":
+        if message.author.server_permissions.administrator:
             qntdd = message.content.strip('l!Limpar ')
             qntdd = toint(qntdd)
             if qntdd <= 100:
@@ -219,12 +283,13 @@ async def on_message(message):
                 await client.delete_message(botmsgdelete)
 
             else:
-                botmsgdelete = await client.send_message(message.channel,'Utilize o comando digitando /delete <numero de 1 a 100>')
+                botmsgdelete = await client.send_message(message.channel,'Utilize o comando digitando l!Limpar <numero de 1 a 100>')
                 await asyncio.sleep(5)
                 await client.delete_message(message)
                 await client.delete_message(botmsgdelete)
         else:
             await client.send_message(message.channel, 'Você não tem permissão para executar esse comando')
+
     #tags games
     if message.content.lower().startswith('l!tag add notificar'):
         cargo = discord.utils.get(message.author.server.roles,name='Notificar')
