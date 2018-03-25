@@ -81,6 +81,7 @@ async def on_message(message):
                 await client.delete_message(message)
     if message.content.lower().startswith('l!oi'):
         await client.send_message(message.channel, "Olá ")
+
     if message.content.lower().startswith('loris'):
         await client.send_message(message.channel, "OI :3")
     if message.content.lower().startswith('kof'):
@@ -227,35 +228,46 @@ async def on_message(message):
         embed=discord.Embed(title="LoriS - Tags", description="l!tag list - Lista de Tags                                                                                                                                                                                       l!tag add (tag) - adicionar uma tag                                                                                                                                                                                       l!tag remove (tag) - remover uma tag", color=0xbf0022))
     #ajuda
     if message.content.lower().startswith("l!ajuda"):
-        await client.send_message(message.author,
-        embed=discord.Embed(
+        embedajuda=discord.Embed(
         title="LoriS - Ajuda",
         color=vermelho,
-        description="l!vom (msg) - Verdade ou Mentira \n"
-                    "l!hacker - O Maior hacker da história (vai ser removido) \n"
-                    "l!moeda - Cara ou Coroa \n"
-                    "l!dog - Imagens de Cachorro \n"
-                    "l!cat - Imagens de Gato \n"
-                    "l!nv - Nivel de Doidice \n"
-                    "l!limpar (0 a 100) [administrador] \n"
-                    "l!tags - Como deixar seu nome colorido \n"
-                    "l!perfil - Veja seu Perfil (beta) \n"
-                    "l!avatar - Veja seu lindo avatar \n"
-                    "l!voar - Voe que nem um passarinho \n"
-                    "l!vercao - Verção do bot \n"
-                    "l!nv - Veja seu nivel de doidice \n"
-                    "l!link - Adquira o link do bot \n"
-                    "l!ping - Pong \n"
-                    "l!mutar - Mute :D {adminstradores}\n"
-                    "l!f (msg) - Para o bot repetir a msg \n"
-                    "l!instagram (img) - Deixe as pessoas avaliarem suas fotos ",))
-        await client.send_message(message.channel,
-            embed=discord.Embed(
-                title="LoriS - Ajuda",
-                color=vermelho,
-                description="os comandos foram enviados para seu privado :) " + message.author.mention
-            ))
-        await client.delete_message(message)
+        description="**Meu Prefix:** L!\n"
+                    "**Minha Verçao:** v 1.0 \n"
+                    "   \n"
+                    "Jogos:\n"
+                    "   \n"
+                    "**l!moeda** » Cara ou Coroa \n"
+                    "**l!vom** (msg) » Verdade ou Mentira \n"
+                    "**l!nv** » Nivel de Doidice \n"           
+                    "     \n"
+                    "Moderação:\n"
+                    "   \n"
+                    "**l!mutar (player)** » Mute :D [adminstradores]\n"
+                    "**l!limpar (0 a 100)** » Limpe o chat [administradores]\n"
+                    "   \n"                    
+                    "Utilidades:\n"
+                    "   \n"
+                    "**l!dog** » Imagens de Cachorro \n"
+                    "**l!cat** » Imagens de Gato \n"
+                    "**l!tags** » Como deixar seu nome colorido \n"
+                    "**l!perfil** » Veja seu Perfil (beta) \n"
+                    "**l!avatar** » Veja seu lindo avatar \n"
+                    "**l!voar** » Voe que nem um passarinho \n"
+                    "**l!link** » Adquira o link do bot \n"
+                    "**l!ping** » Pong \n"
+                    "**l!f (msg)** » Para o bot repetir a msg \n"
+                    "**l!info** » Saiba suas Informações \n"
+                    "**l!ver (pessoa)** » Veja a informação de outras pessoas \n"
+                    "**l!instagram (img)** » Deixe as pessoas avaliarem suas fotos ",
+        )
+        await client.send_message(message.author,embed=embedajuda)
+        embedhelpcanal=discord.Embed(
+            title="LoriS",
+            color=vermelho,
+            description="Meus Comandos Foram Enviados para Você em Seu Direct",
+
+        )
+        await client.send_message(message.channel,embed=embedhelpcanal)
     if message.content.lower().startswith('l!versao'):
         await client.send_message(message.channel, "```Loris                                                                                                                                                                                                                            Versão : 0.1.4```")
     if message.content.lower().startswith('l!vom'):
@@ -361,6 +373,7 @@ async def on_message(message):
         await client.send_message(message.channel, "https://abrilveja.files.wordpress.com/2018/03/brasil-politica-ex-presidente-lula-20180301-004-copy.jpg")
     if message.content.lower().startswith('l!ping') and not message.author.id == '415640814371340288':
         d = datetime.utcnow() - message.timestamp
-    s = d.seconds * 1000 + d.microseconds // 1000
-    await client.send_message(message.channel, '🏓 Pong! {}ms'.format(s))
+        s = d.seconds * 1000 + d.microseconds // 1000
+        await client.send_message(message.channel, '🏓 Pong! {}ms'.format(s))
+
 client.run(token)
