@@ -4,10 +4,7 @@ import random
 import aiohttp
 import os
 import time
-import requests
-import io
 import re
-import safygiphy
 import websockets
 import discord.member
 from datetime import datetime, timedelta
