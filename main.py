@@ -9,7 +9,6 @@ import websockets
 import discord.member
 from datetime import datetime, timedelta
 
-g = safygiphy.Giphy()
 vermelho = 0xbb0021
 client = discord.Client()
 
